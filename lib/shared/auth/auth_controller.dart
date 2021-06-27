@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:payflow/modules/home/home_page.dart';
-import 'package:payflow/modules/login/login_page.dart';
 import 'package:payflow/shared/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,7 +11,7 @@ class AuthController {
     if (user != null) {
       saveUser(user);
       _user = user;
-      Navigator.pushReplacementNamed(context, "/home");
+      Navigator.pushReplacementNamed(context, "/home", arguments: user);
     } else {
       Navigator.pushReplacementNamed(context, "/login");
     }
@@ -21,7 +19,7 @@ class AuthController {
 
   Future<void> saveUser(UserModel user) async {
     final instance = await SharedPreferences.getInstance();
-    instance.setString("user", user.toJson());
+    await instance.setString("user", user.toJson());
     return;
   }
 
